@@ -1,24 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Home from './views/Home';
+import Reservation from './views/Reservation';
+import LogIn from './views/LogIn';
+import Register from './views/Register';
+import { Route, Switch } from 'react-router-dom';
+
+import './scss/App.scss';
 
 function App() {
+  const [
+    checkIn,
+    setCheckIn
+  ] = useState(null);
+
+  const [
+    checkOut,
+    setCheckOut
+  ] = useState(null);
+
+  const [
+    user,
+    setUser
+  ] = useState(null);
+
+  const loginUserHandler = user => {
+    console.log(user);
+  };
+
+  const registerUserHandler = user => {
+    console.log(user);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id='App'>
+      <Switch>
+        <Route
+          path='/reservation'
+          render={() => (
+            <Reservation checkIn={checkIn} checkOut={checkOut} setCheckOut={setCheckOut} setCheckIn={setCheckIn} />
+          )}
+        />
+        <Route path='/login' render={() => <LogIn login={loginUserHandler} />} />
+        <Route path='/register' render={() => <Register register={registerUserHandler} />} />
+        <Route path='/' render={() => <Home user={user} />} exact />
+      </Switch>
     </div>
   );
 }
